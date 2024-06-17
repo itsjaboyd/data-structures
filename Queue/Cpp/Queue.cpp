@@ -7,6 +7,7 @@
 
 #include "Queue.h"
 #include <string>
+#include <stdexcept>
 
 Queue::Queue(int size) {
     setMaxSize(size);

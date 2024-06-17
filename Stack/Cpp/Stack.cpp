@@ -7,6 +7,7 @@
 
 #include "Stack.h"
 #include <string>
+#include <stdexcept>
 
 Stack::Stack(int size) {
     setMaxSize(size);
