@@ -21,20 +21,20 @@ class BinarySearchTree:
     def insert(self, newData, subTree=None):
         """Insert newData into the tree in its appropriate spot."""
 
-        if self.root is None:
+        if self.isEmpty():
             self.root = Node(newData)
             return
 
         temp = subTree if subTree else self.root
         if newData <= temp.data:
-            if temp.left != None:
+            if not self.isEmpty(temp.left, True):
                 self.insert(newData, temp.left)
             else:
                 newNode = Node(newData)
                 newNode.parent = temp
                 temp.left = newNode
         elif newData > temp.data:
-            if temp.right != None:
+            if not self.isEmpty(temp.right, True):
                 self.insert(newData, temp.right)
             else:
                 newNode = Node(newData)
@@ -47,13 +47,13 @@ class BinarySearchTree:
     def search(self, searchData, subTree=None, started=False):
         """Search for a node in tree containing the searchData value."""
 
-        if self.root is None:
+        if self.isEmpty():
             return False
         if self.root.data == searchData:
             return True
 
         temp = self.root if not started else subTree
-        if temp is None:
+        if self.isEmpty(temp, True):
             return False
         if searchData < temp.data:
             return self.search(searchData, temp.left, True)
@@ -62,11 +62,28 @@ class BinarySearchTree:
         else: # the temp subtree node is searchData
             return True
 
-    def maximum(self):
-        pass
+    def maximum(self, subTree=None, started=False):
+        """Return the maximum data in the tree located furthest right."""
 
-    def minimum(self):
-        pass
+        if self.isEmpty():
+            return None
+
+        temp = self.root if not started else subTree
+        if self.isEmpty(temp.right, True):
+            return temp.data
+        return self.maximum(temp.right, True)
+
+
+    def minimum(self, subTree=None, started=False):
+        """Return the mininum data in the tree located furthest left."""
+        
+        if self.isEmpty():
+            return None
+        
+        temp = self.root if not started else subTree
+        if self.isEmpty(temp.left, True):
+            return temp.data
+        return self.minimum(temp.left, True)
 
     def inOrder(self):
         pass
@@ -83,8 +100,9 @@ class BinarySearchTree:
     def predecessor(self):
         pass
 
-    def isEmpty(self):
-        return self.root is None
+    def isEmpty(self, subTree=None, useSub=False):
+        return subTree is None if useSub else self.root is None
+
 
 class Node:
     def __init__(self, data):

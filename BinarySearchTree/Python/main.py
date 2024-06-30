@@ -10,5 +10,8 @@ def main():
     bst.insert(3)
     bst.insert(4)
 
+    print(bst.maximum())
+    print(bst.minimum())
+
 if __name__ == "__main__":
     main()
